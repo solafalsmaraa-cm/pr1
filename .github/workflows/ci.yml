@@ -11,14 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ سحب آخر نسخة من المستودع
       - uses: actions/checkout@v3
+
+      # 2️⃣ إعداد PHP
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
+
+      # 3️⃣ تثبيت Composer dependencies
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist
+
+      # 4️⃣ التأكد من وجود PHPUnit
+      - name: Verify phpunit exists
+        run: ls -la ./vendor/bin
+
+      # 5️⃣ تشغيل اختبارات PHPUnit
       - name: Run PHPUnit tests
         run: ./vendor/bin/phpunit
+
+      # 6️⃣ تشغيل اختبارات Laravel
       - name: Run Laravel tests
         run: php artisan test --env=testing
