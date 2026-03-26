@@ -1,6 +1,5 @@
-name: Laravel CI
+﻿name: Laravel CI
 
-# تشغيل الـ workflow عند كل push أو pull request على الفرع master
 on:
   push:
     branches: [ master ]
@@ -12,23 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1️⃣ سحب آخر نسخة من المستودع
       - uses: actions/checkout@v3
-
-      # 2️⃣ إعداد PHP
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
-
-      # 3️⃣ تثبيت Composer dependencies
       - name: Install dependencies
         run: composer install --no-progress --prefer-dist
-
-      # 4️⃣ تشغيل اختبارات PHPUnit
-      - name: Run tests
+      - name: Run PHPUnit tests
         run: ./vendor/bin/phpunit
-
-      # 5️⃣ تشغيل اختبارات Laravel (اختياري إذا تستخدم Laravel)
       - name: Run Laravel tests
         run: php artisan test --env=testing
